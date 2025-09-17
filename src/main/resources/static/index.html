@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson Points</title>
+
+</head>
+<body dir="rtl">
+<h1>📚 מערכת ניקוד לתלמידים</h1>
+
+<!-- טופס יצירת תלמיד -->
+<h2>🧑 יצירת תלמיד חדש</h2>
+<form id="studentForm">
+    <label>שם פרטי: <input type="text" name="firstName" required></label><br>
+    <label>שם משפחה: <input type="text" name="lastName" required></label><br>
+    <label>טלפון תלמיד: <input type="text" name="phone" required></label><br>
+    <label>טלפון הורה: <input type="text" name="parentPhone" required></label><br>
+    <label>תעודת זהות: <input type="text" name="id" required></label><br>
+    <button type="submit">✅ צור תלמיד</button>
+</form>
+
+<hr>
+
+<!-- כפתורי פעולות -->
+<h2>🎯 עדכון נקודות</h2>
+<label>תעודת זהות של תלמיד: <input type="text" id="studentId" /></label><br><br>
+
+<button onclick="updatePoints('onTime')">🕐 הגעה בזמן</button>
+<button onclick="updatePoints('listen')">👂 הקשבה</button>
+<button onclick="updatePoints('active')">🙋‍♂️ השתתפות אקטיבית</button>
+<button onclick="updatePoints('late')">⏰ איחור</button>
+<button onclick="updatePoints('sleep')">😴 שינה בשיעור</button>
+<button onclick="updatePoints('disturb')">😡 הפרעה</button>
+
+<p id="result"></p>
+
+<script>
+    document.getElementById('studentForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const student = {
+            firstName: form.firstName.value,
+            lastName: form.lastName.value,
+            phone: form.phone.value,
+            parentPhone: form.parentPhone.value,
+            id: form.id.value,
+            points: 0
+        };
+
+        const res = await fetch('/api/student', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(student)
+        });
+
+        const text = await res.text();
+        document.getElementById('result').innerText = text;
+        form.reset();
+    });
+
+    async function updatePoints(action) {
+        const id = document.getElementById('studentId').value;
+        if (!id) {
+            alert("יש להזין תעודת זהות");
+            return;
+        }
+
+        const res = await fetch(`/api/student/${id}/points?action=${action}`, {
+            method: 'POST'
+        });
+
+        const text = await res.text();
+        document.getElementById('result').innerText = text;
+    }
+</script>
