@@ -70,21 +70,10 @@ public class StudentPointsAPI implements CommandLineRunner {
 
         switch (action) {
             case "onTime": Points.onTime(s); break;
-            case "listen": Points.listenReason(s); break;
-            case "active": Points.activeParticipation(s); break;
-            case "late": Points.late(s); break;
-            case "disturb": Points.disturbOnce(s); break;
-            case "disturbRepeated": Points.disturbRepeated(s); break;
-            case "sleep": Points.sleeping(s); break;
-            case "absent": Points.fullLessonAbsence(s); break;
-            case "phone": Points.phoneUse(s); break;
-            case "noOrder": Points.noOrder(s); break;
-            case "talk": Points.talking(s); break;
-            case "leave": Points.leaveLesson(s); break;
-            default: return "❌ Unknown action";
         }
 
         docRef.update("points", s.getPoints());
         return "✅ Points updated: " + s.getPoints();
     }
+
 }

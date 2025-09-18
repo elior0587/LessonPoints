@@ -8,6 +8,8 @@ public class Student {
     private String id;
     public int points;
 
+    public Student() {}
+
     public Student(String firstName, String lastName, String phone, String parentPhone, String id, int points){
         this.firstName = firstName;
         this.lastName = lastName;
