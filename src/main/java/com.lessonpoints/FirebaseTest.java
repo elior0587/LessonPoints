@@ -31,7 +31,7 @@ public class FirebaseTest {
         saveStudent(s);
 
         // דוגמה: הוספת נקודות על הגעה בזמן
-        Points.onTime(s);
+           Points.onTime(s);
         updateStudentPoints(s);
     }
 

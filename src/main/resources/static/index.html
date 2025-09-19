@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Lesson Points</title>
-
 </head>
 <body dir="rtl">
 <h1>📚 מערכת ניקוד לתלמידים</h1>
@@ -26,15 +25,17 @@
 <label>תעודת זהות של תלמיד: <input type="text" id="studentId" /></label><br><br>
 
 <button onclick="updatePoints('onTime')">🕐 הגעה בזמן</button>
-<button onclick="updatePoints('listen')">👂 הקשבה</button>
-<button onclick="updatePoints('active')">🙋‍♂️ השתתפות אקטיבית</button>
+<button onclick="updatePoints('listenReason')">👂 הקשבה</button>
+<button onclick="updatePoints('activeParticipation')">🙋‍♂️ השתתפות אקטיבית</button>
 <button onclick="updatePoints('late')">⏰ איחור</button>
-<button onclick="updatePoints('sleep')">😴 שינה בשיעור</button>
-<button onclick="updatePoints('disturb')">😡 הפרעה</button>
+<button onclick="updatePoints('sleeping')">😴 שינה בשיעור</button>
+<button onclick="updatePoints('noOrder')">😡 הפרעה</button>
 
 <p id="result"></p>
 
 <script>
+    const BASE_URL = 'http://localhost:8080'; // <== זה השינוי הכי חשוב
+
     document.getElementById('studentForm').addEventListener('submit', async function (e) {
         e.preventDefault();
 
@@ -48,7 +49,7 @@
             points: 0
         };
 
-        const res = await fetch('/api/student', {
+        const res = await fetch(`${BASE_URL}/api/student`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(student)
@@ -66,7 +67,7 @@
             return;
         }
 
-        const res = await fetch(`/api/student/${id}/points?action=${action}`, {
+        const res = await fetch(`${BASE_URL}/api/student/${id}/points?action=${action}`, {
             method: 'POST'
         });
 
@@ -74,3 +75,5 @@
         document.getElementById('result').innerText = text;
     }
 </script>
+</body>
+</html>

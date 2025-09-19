@@ -70,10 +70,15 @@ public class StudentPointsAPI implements CommandLineRunner {
 
         switch (action) {
             case "onTime": Points.onTime(s); break;
-        }
+            case "listenReason": Points.listenReason(s); break;
+            case "activeParticipation": Points.activeParticipation(s); break;
+            case "late": Points.late(s); break;
+            case "sleeping": Points.sleeping(s); break;
+            case "noOrder": Points.noOrder(s); break;
 
+        }
+        System.out.println("🎯 פעולה שבוצעה: " + action);
         docRef.update("points", s.getPoints());
         return "✅ Points updated: " + s.getPoints();
     }
-
 }
